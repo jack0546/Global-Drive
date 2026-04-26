@@ -17,16 +17,31 @@ export default function Contact({ darkMode }: ContactProps) {
     message: '',
   });
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate form submission via Formspree
-    setTimeout(() => {
-      toast.success('Message sent successfully! We will get back to you soon.');
-      setFormData({ name: '', email: '', phone: '', type: 'general', carName: '', message: '' });
+
+    try {
+      const response = await fetch('https://formspree.io/f/mjgprlgl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        toast.success('Message sent successfully! We will get back to you soon.');
+        setFormData({ name: '', email: '', phone: '', type: 'general', carName: '', message: '' });
+      } else {
+        toast.error('Failed to send message. Please try again later.');
+      }
+    } catch (error) {
+      toast.error('An error occurred while sending your message. Please try again.');
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
