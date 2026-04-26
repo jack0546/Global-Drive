@@ -1,4 +1,13 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
+import toast from 'react-hot-toast';
 
 interface AuthUser {
   id: string;
@@ -20,103 +29,117 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 const ADMIN_EMAIL = 'admin@globaldriveafrica.com';
-const ADMIN_PASSWORD = 'admin123';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('gda_user');
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch {}
-    }
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const docRef = doc(db, 'users', firebaseUser.uid);
+          const docSnap = await getDoc(docRef);
+          
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            setUser({
+              id: firebaseUser.uid,
+              name: data.name || '',
+              email: firebaseUser.email || '',
+              role: data.role || 'user',
+              favorites: data.favorites || [],
+            });
+          } else {
+            setUser({
+              id: firebaseUser.uid,
+              name: firebaseUser.displayName || 'User',
+              email: firebaseUser.email || '',
+              role: firebaseUser.email === ADMIN_EMAIL ? 'admin' : 'user',
+              favorites: [],
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching user data from Firestore", error);
+        }
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Mock authentication
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      const adminUser: AuthUser = {
-        id: 'admin-1',
-        name: 'Admin',
-        email: ADMIN_EMAIL,
-        role: 'admin',
-        favorites: [],
-      };
-      setUser(adminUser);
-      localStorage.setItem('gda_user', JSON.stringify(adminUser));
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       return true;
+    } catch (error) {
+      console.error("Login Error:", error);
+      toast.error("Invalid email or password");
+      return false;
     }
-
-    // Check registered users
-    const users = JSON.parse(localStorage.getItem('gda_users') || '[]');
-    const found = users.find((u: any) => u.email === email && u.password === password);
-    if (found) {
-      const authUser: AuthUser = {
-        id: found.id,
-        name: found.name,
-        email: found.email,
-        role: 'user',
-        favorites: found.favorites || [],
-      };
-      setUser(authUser);
-      localStorage.setItem('gda_user', JSON.stringify(authUser));
-      return true;
-    }
-    return false;
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const users = JSON.parse(localStorage.getItem('gda_users') || '[]');
-    if (users.some((u: any) => u.email === email)) return false;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const firebaseUser = userCredential.user;
+      
+      const role = email === ADMIN_EMAIL ? 'admin' : 'user';
+      
+      const newUser: AuthUser = {
+        id: firebaseUser.uid,
+        name,
+        email,
+        role,
+        favorites: [],
+      };
 
-    const newUser = {
-      id: 'user-' + Date.now(),
-      name,
-      email,
-      password,
-      role: 'user' as const,
-      favorites: [],
-      createdAt: new Date().toISOString(),
-    };
-    users.push(newUser);
-    localStorage.setItem('gda_users', JSON.stringify(users));
-
-    const authUser: AuthUser = {
-      id: newUser.id,
-      name: newUser.name,
-      email: newUser.email,
-      role: 'user',
-      favorites: [],
-    };
-    setUser(authUser);
-    localStorage.setItem('gda_user', JSON.stringify(authUser));
-    return true;
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('gda_user');
-  };
-
-  const toggleFavorite = (carId: string) => {
-    if (!user) return;
-    const updated = { ...user };
-    if (updated.favorites.includes(carId)) {
-      updated.favorites = updated.favorites.filter(f => f !== carId);
-    } else {
-      updated.favorites = [...updated.favorites, carId];
+      // Save user profile in Firestore
+      await setDoc(doc(db, 'users', firebaseUser.uid), newUser);
+      setUser(newUser);
+      
+      return true;
+    } catch (error: any) {
+      console.error("Register Error:", error);
+      if (error.code === 'auth/email-already-in-use') {
+        toast.error("Email is already registered");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+      return false;
     }
-    setUser(updated);
-    localStorage.setItem('gda_user', JSON.stringify(updated));
+  };
 
-    // Also update in users list
-    const users = JSON.parse(localStorage.getItem('gda_users') || '[]');
-    const idx = users.findIndex((u: any) => u.id === user.id);
-    if (idx !== -1) {
-      users[idx].favorites = updated.favorites;
-      localStorage.setItem('gda_users', JSON.stringify(users));
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
+  };
+
+  const toggleFavorite = async (carId: string) => {
+    if (!user) {
+      toast.error("Please login to save favorites");
+      return;
+    }
+    
+    try {
+      const newFavorites = user.favorites.includes(carId)
+        ? user.favorites.filter(f => f !== carId)
+        : [...user.favorites, carId];
+        
+      const updatedUser = { ...user, favorites: newFavorites };
+      setUser(updatedUser);
+      
+      const userRef = doc(db, 'users', user.id);
+      await updateDoc(userRef, {
+        favorites: newFavorites
+      });
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+      toast.error("Could not update favorites");
     }
   };
 

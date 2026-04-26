@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, MessageCircle, Send, Clock } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 interface ContactProps {
   darkMode: boolean;
@@ -32,6 +34,25 @@ export default function Contact({ darkMode }: ContactProps) {
       });
 
       if (response.ok) {
+        if (formData.type !== 'general') {
+          try {
+            const ordersRef = collection(db, 'orders');
+            await addDoc(ordersRef, {
+              name: formData.name,
+              email: formData.email,
+              phone: formData.phone,
+              type: formData.type,
+              carName: formData.carName,
+              message: formData.message,
+              createdAt: serverTimestamp(),
+              status: 'pending'
+            });
+          } catch (dbError) {
+            console.error("Error saving order to Firestore:", dbError);
+            // We don't fail the whole submission since Formspree succeeded
+          }
+        }
+
         toast.success('Message sent successfully! We will get back to you soon.');
         setFormData({ name: '', email: '', phone: '', type: 'general', carName: '', message: '' });
       } else {
