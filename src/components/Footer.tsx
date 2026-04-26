@@ -84,14 +84,14 @@ export default function Footer({ darkMode }: FooterProps) {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary-400 shrink-0" />
-                <a href="tel:+233XXXXXXXXX" className={`text-sm transition-all hover:text-primary-400 ${darkMode ? 'text-dark-400' : 'text-dark-300'}`}>
-                  +233 XX XXX XXXX
+                <a href="tel:+233244240166" className={`text-sm transition-all hover:text-primary-400 ${darkMode ? 'text-dark-400' : 'text-dark-300'}`}>
+                  +233 24 424 0166
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary-400 shrink-0" />
-                <a href="mailto:info@globaldriveafrica.com" className={`text-sm transition-all hover:text-primary-400 ${darkMode ? 'text-dark-400' : 'text-dark-300'}`}>
-                  info@globaldriveafrica.com
+                <a href="mailto:globaldrive.gh@gmail.com" className={`text-sm transition-all hover:text-primary-400 ${darkMode ? 'text-dark-400' : 'text-dark-300'}`}>
+                  globaldrive.gh@gmail.com
                 </a>
               </li>
             </ul>
