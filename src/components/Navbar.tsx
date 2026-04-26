@@ -79,8 +79,12 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
                     darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-100 text-dark-700'
                   }`}
                 >
-                  <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-semibold text-sm">{user.name[0]}</span>
+                  <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-500 to-accent-600">
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-white font-semibold text-sm">{user.name[0]}</span>
+                    )}
                   </div>
                   <span className="text-sm font-medium hidden sm:block">{user.name}</span>
                 </button>

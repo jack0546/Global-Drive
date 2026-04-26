@@ -17,6 +17,7 @@ interface AuthUser {
   email: string;
   role: 'user' | 'admin';
   favorites: string[];
+  photoURL?: string;
 }
 
 interface AuthContextType {
@@ -31,7 +32,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const ADMIN_EMAIL = 'admin@globaldriveafrica.com';
+const ADMIN_EMAIL = 'globaldrive.gh@gmail.com';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -49,8 +50,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               id: firebaseUser.uid,
               name: data.name || '',
               email: firebaseUser.email || '',
-              role: data.role || 'user',
+              role: data.role || (firebaseUser.email === ADMIN_EMAIL ? 'admin' : 'user'),
               favorites: data.favorites || [],
+              photoURL: data.photoURL || firebaseUser.photoURL || undefined,
             });
           } else {
             setUser({
@@ -59,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               email: firebaseUser.email || '',
               role: firebaseUser.email === ADMIN_EMAIL ? 'admin' : 'user',
               favorites: [],
+              photoURL: firebaseUser.photoURL || undefined,
             });
           }
         } catch (error) {
@@ -96,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email,
         role,
         favorites: [],
+        photoURL: '',
       };
 
       // Save user profile in Firestore
@@ -128,8 +132,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           id: firebaseUser.uid,
           name: firebaseUser.displayName || 'Google User',
           email: firebaseUser.email || '',
-          role: 'user',
+          role: firebaseUser.email === ADMIN_EMAIL ? 'admin' : 'user',
           favorites: [],
+          photoURL: firebaseUser.photoURL || '',
         };
         await setDoc(docRef, newUser);
         setUser(newUser);
