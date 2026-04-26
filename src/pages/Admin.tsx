@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Car, Users, MessageSquare, ShoppingCart, TrendingUp, Plus, Edit, Trash2, LogOut } from 'lucide-react';
+import { Car, Users, MessageSquare, ShoppingCart, TrendingUp, Plus, Edit, Trash2, LogOut, Clock, Mail, Phone } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { cars } from '../data/cars';
+import { db } from '../lib/firebase';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 
 
 interface AdminProps {
@@ -14,6 +16,33 @@ export default function Admin({ darkMode }: AdminProps) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<'dashboard' | 'cars' | 'messages' | 'users'>('dashboard');
+  const [liveOrders, setLiveOrders] = useState<any[]>([]);
+  const [liveUsers, setLiveUsers] = useState<any[]>([]);
+  const [stats, setStats] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ordersSnap = await getDocs(query(collection(db, 'orders'), orderBy('createdAt', 'desc')));
+        const ordersData = ordersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setLiveOrders(ordersData);
+
+        const usersSnap = await getDocs(collection(db, 'users'));
+        const usersData = usersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setLiveUsers(usersData);
+
+        setStats([
+          { icon: Car, label: 'Total Cars', value: cars.length, color: 'from-blue-500 to-blue-600' },
+          { icon: ShoppingCart, label: 'Inquiries', value: ordersData.length, color: 'from-green-500 to-green-600' },
+          { icon: Users, label: 'Total Users', value: usersData.length, color: 'from-purple-500 to-purple-600' },
+          { icon: TrendingUp, label: 'Sold (Manual)', value: cars.filter(c => c.sold).length, color: 'from-gold-500 to-gold-600' },
+        ]);
+      } catch (err) {
+        console.error("Error fetching admin data:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   if (!user || user.role !== 'admin') {
     return (
@@ -28,13 +57,6 @@ export default function Admin({ darkMode }: AdminProps) {
       </div>
     );
   }
-
-  const stats = [
-    { icon: Car, label: 'Total Cars', value: cars.length, color: 'from-blue-500 to-blue-600' },
-    { icon: ShoppingCart, label: 'Sold Cars', value: cars.filter(c => c.sold).length, color: 'from-green-500 to-green-600' },
-    { icon: Users, label: 'Total Users', value: JSON.parse(localStorage.getItem('gda_users') || '[]').length || 1, color: 'from-purple-500 to-purple-600' },
-    { icon: TrendingUp, label: 'Revenue (USD)', value: `$${cars.filter(c => c.sold).reduce((sum, c) => sum + c.priceUSD, 0).toLocaleString()}`, color: 'from-gold-500 to-gold-600' },
-  ];
 
   return (
     <div className={`min-h-screen pt-16 ${darkMode ? 'bg-dark-950 text-white' : 'bg-gray-50'}`}>
@@ -209,13 +231,56 @@ export default function Admin({ darkMode }: AdminProps) {
           {activeSection === 'messages' && (
             <div>
               <h1 className="text-2xl font-bold mb-6">Messages & Inquiries</h1>
-              <div className={`p-8 rounded-2xl text-center ${darkMode ? 'bg-dark-800 border border-dark-700' : 'bg-white shadow-sm'}`}>
-                <MessageSquare className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                <h3 className="text-lg font-bold mb-2">No Messages Yet</h3>
-                <p className={`text-sm ${darkMode ? 'text-dark-400' : 'text-dark-500'}`}>
-                  When customers send inquiries, they will appear here.
-                </p>
-              </div>
+              {liveOrders.length > 0 ? (
+                <div className={`rounded-2xl overflow-hidden ${darkMode ? 'bg-dark-800 border border-dark-700' : 'bg-white shadow-sm'}`}>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className={`text-left text-xs font-medium ${darkMode ? 'text-dark-400 border-b border-dark-700' : 'text-dark-500 border-b border-dark-200'}`}>
+                          <th className="p-4">Customer</th>
+                          <th className="p-4">Inquiry</th>
+                          <th className="p-4">Status</th>
+                          <th className="p-4">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {liveOrders.map(order => (
+                          <tr key={order.id} className={`${darkMode ? 'border-b border-dark-800' : 'border-b border-dark-100'}`}>
+                            <td className="p-4">
+                              <p className="text-sm font-semibold">{order.name}</p>
+                              <div className="flex flex-col gap-1 mt-1">
+                                <span className={`text-xs flex items-center gap-1 ${darkMode ? 'text-dark-400' : 'text-dark-500'}`}><Mail className="w-3 h-3" /> {order.email}</span>
+                                <span className={`text-xs flex items-center gap-1 ${darkMode ? 'text-dark-400' : 'text-dark-500'}`}><Phone className="w-3 h-3" /> {order.phone}</span>
+                              </div>
+                            </td>
+                            <td className="p-4">
+                              <p className="text-sm font-bold capitalize">{order.type.replace('-', ' ')}</p>
+                              <p className="text-xs text-primary-500 mt-0.5">{order.carName || 'General Inquiry'}</p>
+                              <p className={`text-xs mt-1 italic ${darkMode ? 'text-dark-300' : 'text-dark-600'}`}>{order.message}</p>
+                            </td>
+                            <td className="p-4 text-sm font-semibold">
+                               <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' : 'bg-green-500/20 text-green-500'}`}>
+                                  {order.status}
+                               </span>
+                            </td>
+                            <td className="p-4 text-xs opacity-60">
+                              {order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : 'N/A'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : (
+                <div className={`p-8 rounded-2xl text-center ${darkMode ? 'bg-dark-800 border border-dark-700' : 'bg-white shadow-sm'}`}>
+                  <MessageSquare className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                  <h3 className="text-lg font-bold mb-2">No Messages Yet</h3>
+                  <p className={`text-sm ${darkMode ? 'text-dark-400' : 'text-dark-500'}`}>
+                    When customers send inquiries, they will appear here.
+                  </p>
+                </div>
+              )}
             </div>
           )}
 
@@ -229,34 +294,31 @@ export default function Admin({ darkMode }: AdminProps) {
                       <th className="p-4">Name</th>
                       <th className="p-4">Email</th>
                       <th className="p-4">Role</th>
-                      <th className="p-4">Joined</th>
+                      <th className="p-4">Favorites</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(() => {
-                      const users = JSON.parse(localStorage.getItem('gda_users') || '[]');
-                      return [...users, { id: 'admin-1', name: 'Admin', email: 'admin@globaldriveafrica.com', role: 'admin', createdAt: new Date().toISOString() }].map((u: any) => (
-                        <tr key={u.id} className={`${darkMode ? 'border-b border-dark-800' : 'border-b border-dark-100'}`}>
-                          <td className="p-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold text-sm">
-                                {u.name[0]}
-                              </div>
-                              <span className="text-sm font-medium">{u.name}</span>
+                    {liveUsers.map((u: any) => (
+                      <tr key={u.id} className={`${darkMode ? 'border-b border-dark-800' : 'border-b border-dark-100'}`}>
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold text-sm">
+                              {u.photoURL ? <img src={u.photoURL} alt="" /> : u.name[0]}
                             </div>
-                          </td>
-                          <td className="p-4 text-sm">{u.email}</td>
-                          <td className="p-4">
-                            <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                              u.role === 'admin' ? 'bg-purple-500/20 text-purple-500' : 'bg-primary-500/20 text-primary-500'
-                            }`}>
-                              {u.role}
-                            </span>
-                          </td>
-                          <td className="p-4 text-sm">{u.createdAt?.split('T')[0] || 'N/A'}</td>
-                        </tr>
-                      ));
-                    })()}
+                            <span className="text-sm font-medium">{u.name}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 text-sm">{u.email}</td>
+                        <td className="p-4">
+                          <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                            u.role === 'admin' ? 'bg-purple-500/20 text-purple-500' : 'bg-primary-500/20 text-primary-500'
+                          }`}>
+                            {u.role}
+                          </span>
+                        </td>
+                        <td className="p-4 text-sm">{u.favorites?.length || 0} Cars</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

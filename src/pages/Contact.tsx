@@ -19,6 +19,8 @@ export default function Contact({ darkMode }: ContactProps) {
     message: '',
   });
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -38,6 +40,7 @@ export default function Contact({ darkMode }: ContactProps) {
           try {
             const ordersRef = collection(db, 'orders');
             await addDoc(ordersRef, {
+              userId: user?.id || 'anonymous',
               name: formData.name,
               email: formData.email,
               phone: formData.phone,

@@ -13,6 +13,7 @@ import Contact from './pages/Contact';
 import Favorites from './pages/Favorites';
 import Compare from './pages/Compare';
 import Admin from './pages/Admin';
+import History from './pages/History';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/favorites" element={<Favorites darkMode={darkMode} />} />
             <Route path="/compare" element={<Compare darkMode={darkMode} />} />
             <Route path="/admin" element={<Admin darkMode={darkMode} />} />
+            <Route path="/history" element={<History darkMode={darkMode} />} />
           </Routes>
           <Footer darkMode={darkMode} />
           <WhatsAppButton />

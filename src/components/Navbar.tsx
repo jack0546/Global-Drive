@@ -106,16 +106,26 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
                           Admin Dashboard
                         </Link>
                       )}
-                      <Link
-                        to="/favorites"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center gap-3 px-4 py-3 text-sm transition-all ${
-                          darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-50 text-dark-700'
-                        }`}
-                      >
-                        <Heart className="w-4 h-4 text-red-400" />
-                        Favorites
-                      </Link>
+                        <Link
+                          to="/favorites"
+                          onClick={() => setDropdownOpen(false)}
+                          className={`flex items-center gap-3 px-4 py-3 text-sm transition-all ${
+                            darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-50 text-dark-700'
+                          }`}
+                        >
+                          <Heart className="w-4 h-4 text-red-400" />
+                          Favorites
+                        </Link>
+                        <Link
+                          to="/history"
+                          onClick={() => setDropdownOpen(false)}
+                          className={`flex items-center gap-3 px-4 py-3 text-sm transition-all ${
+                            darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-50 text-dark-700'
+                          }`}
+                        >
+                          <Clock className="w-4 h-4 text-primary-400" />
+                          My History
+                        </Link>
                       <button
                         onClick={() => { logout(); setDropdownOpen(false); }}
                         className={`flex items-center gap-3 px-4 py-3 text-sm w-full transition-all ${
