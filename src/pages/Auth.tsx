@@ -16,7 +16,7 @@ export default function Auth({ darkMode }: AuthProps) {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login, register } = useAuth();
+  const { login, register, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,6 +48,20 @@ export default function Auth({ darkMode }: AuthProps) {
       }
     } catch {
       toast.error('Something went wrong');
+    }
+    setLoading(false);
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      const success = await loginWithGoogle();
+      if (success) {
+        toast.success('Successfully signed in with Google!');
+        navigate('/');
+      }
+    } catch {
+      // Error handled in context
     }
     setLoading(false);
   };
@@ -137,6 +151,29 @@ export default function Auth({ darkMode }: AuthProps) {
             </button>
           </form>
 
+          <div className="mt-8">
+            <div className={`relative flex items-center justify-center mb-6`}>
+               <div className={`absolute inset-0 flex items-center`}>
+                  <div className={`w-full border-t ${darkMode ? 'border-dark-700' : 'border-dark-200'}`}></div>
+               </div>
+               <div className={`relative px-4 text-xs font-semibold ${darkMode ? 'bg-dark-800 text-dark-400' : 'bg-white text-dark-500'}`}>
+                  OR CONTINUE WITH
+               </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className={`w-full flex items-center justify-center gap-3 py-3 rounded-xl border transition-all ${
+                darkMode ? 'bg-dark-700 border-dark-600 hover:bg-dark-600 text-white' : 'bg-white border-dark-200 hover:bg-dark-50 text-dark-900'
+              }`}
+            >
+              <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google" className="w-5 h-5" />
+              <span className="font-semibold">Google</span>
+            </button>
+          </div>
+
           <div className="mt-6 text-center">
             <p className={`text-sm ${darkMode ? 'text-dark-400' : 'text-dark-500'}`}>
               {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
@@ -146,13 +183,7 @@ export default function Auth({ darkMode }: AuthProps) {
             </p>
           </div>
 
-          {isLogin && (
-            <div className="mt-4 p-3 rounded-xl bg-primary-500/10 border border-primary-500/20">
-              <p className="text-xs text-primary-600 text-center">
-                <strong>Demo Admin:</strong> admin@globaldriveafrica.com / admin123
-              </p>
-            </div>
-          )}
+          {/* Demo Admin credentials removed as per request */}
         </motion.div>
       </div>
     </div>
