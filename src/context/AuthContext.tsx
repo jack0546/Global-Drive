@@ -79,9 +79,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login Error:", error);
-      toast.error("Invalid email or password");
+      let message = "Invalid email or password";
+      
+      if (error.code === 'auth/user-not-found') message = "No account found with this email";
+      else if (error.code === 'auth/wrong-password') message = "Incorrect password";
+      else if (error.code === 'auth/invalid-email') message = "Invalid email address format";
+      else if (error.code === 'auth/too-many-requests') message = "Too many failed attempts. Please try again later";
+      else if (error.code === 'auth/internal-error') message = "Authentication service error";
+      
+      toast.error(message);
       return false;
     }
   };
@@ -103,17 +111,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       };
 
       // Save user profile in Firestore
-      await setDoc(doc(db, 'users', firebaseUser.uid), newUser);
-      setUser(newUser);
+      try {
+        await setDoc(doc(db, 'users', firebaseUser.uid), newUser);
+      } catch (dbError) {
+        console.error("Firestore Save Error:", dbError);
+        // Still proceed since Auth was successful
+      }
       
+      setUser(newUser);
       return true;
     } catch (error: any) {
       console.error("Register Error:", error);
-      if (error.code === 'auth/email-already-in-use') {
-        toast.error("Email is already registered");
-      } else {
-        toast.error("Registration failed. Please try again.");
-      }
+      let message = "Registration failed. Please try again.";
+      
+      if (error.code === 'auth/email-already-in-use') message = "This email is already registered";
+      else if (error.code === 'auth/weak-password') message = "Password should be at least 6 characters";
+      else if (error.code === 'auth/invalid-email') message = "Invalid email format";
+      
+      toast.error(message);
       return false;
     }
   };
@@ -125,9 +140,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const firebaseUser = result.user;
 
       const docRef = doc(db, 'users', firebaseUser.uid);
-      const docSnap = await getDoc(docRef);
+      let docSnap;
+      
+      try {
+        docSnap = await getDoc(docRef);
+      } catch (e) {
+        console.error("Firestore Get Error:", e);
+      }
 
-      if (!docSnap.exists()) {
+      if (!docSnap || !docSnap.exists()) {
         const newUser: AuthUser = {
           id: firebaseUser.uid,
           name: firebaseUser.displayName || 'Google User',
@@ -136,13 +157,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           favorites: [],
           photoURL: firebaseUser.photoURL || '',
         };
-        await setDoc(docRef, newUser);
+        try {
+          await setDoc(docRef, newUser);
+        } catch (e) {
+          console.error("Firestore Create Error:", e);
+        }
         setUser(newUser);
       }
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Google Login Error:", error);
-      toast.error("Failed to sign in with Google");
+      if (error.code !== 'auth/popup-closed-by-user') {
+        toast.error("Failed to sign in with Google");
+      }
       return false;
     }
   };

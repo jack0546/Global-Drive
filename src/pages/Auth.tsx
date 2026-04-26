@@ -29,9 +29,8 @@ export default function Auth({ darkMode }: AuthProps) {
         if (success) {
           toast.success('Welcome back!');
           navigate('/');
-        } else {
-          toast.error('Invalid email or password');
         }
+        // Specific error toast is now handled within context logic
       } else {
         if (!name.trim()) {
           toast.error('Please enter your name');
