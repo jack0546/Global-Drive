@@ -38,7 +38,7 @@ export default function CarDetail({ darkMode }: CarDetailProps) {
   };
 
   const images = getImages();
-  const whatsappUrl = `https://wa.me/233244240166?text=${encodeURIComponent(`Hello Global Drive Africa, I'm interested in ${car.name}`)}`;
+  const whatsappUrl = `https://wa.me/0244240166?text=${encodeURIComponent(`Hello Global Drive Africa, I'm interested in ${car.name}`)}`;
 
   return (
     <div className={`min-h-screen pt-20 ${darkMode ? 'bg-dark-950 text-white' : 'bg-gray-50 text-dark-900'}`}>
