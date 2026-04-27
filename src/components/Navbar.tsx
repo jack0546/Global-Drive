@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Car, Menu, X, User, LogOut, Shield, Heart, Moon, Sun } from 'lucide-react';
+import { Car, Menu, X, User, LogOut, Shield, Heart, Moon, Sun, Clock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 interface NavbarProps {
@@ -32,8 +32,8 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 via-accent-500 to-gold-500 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform">
-              <Car className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center transform group-hover:scale-105 transition-transform">
+              <img src="/logo.jpg" alt="Global Drive" className="w-full h-full object-cover" />
             </div>
             <div>
               <span className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-dark-900'}`}>Global Drive</span>
@@ -70,14 +70,35 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
               {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            {/* User Menu */}
+            {/* User Section */}
             {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+              <div className="flex items-center gap-1">
+                {user.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className={`p-2 rounded-lg transition-all ${
+                      darkMode ? 'text-primary-400 hover:bg-dark-700' : 'text-primary-600 hover:bg-dark-100'
+                    }`}
+                    title="Admin Dashboard"
+                  >
+                    <Shield className="w-5 h-5" />
+                  </Link>
+                )}
+                <Link
+                  to="/favorites"
+                  className={`p-2 rounded-lg transition-all ${
+                    darkMode ? 'text-red-400 hover:bg-dark-700' : 'text-red-600 hover:bg-dark-100'
+                  }`}
+                  title="My Favorites"
+                >
+                  <Heart className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/history"
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                     darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-100 text-dark-700'
                   }`}
+                  title="My History"
                 >
                   <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-500 to-accent-600">
                     {user.photoURL ? (
@@ -86,58 +107,17 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
                       <span className="text-white font-semibold text-sm">{user.name[0]}</span>
                     )}
                   </div>
-                  <span className="text-sm font-medium hidden sm:block">{user.name}</span>
+                  <span className="text-sm font-medium hidden sm:block">History</span>
+                </Link>
+                <button
+                  onClick={() => { logout(); window.location.href = '/'; }}
+                  className={`p-2 rounded-lg transition-all ${
+                    darkMode ? 'text-red-400 hover:bg-dark-700' : 'text-red-600 hover:bg-dark-100'
+                  }`}
+                  title="Sign Out"
+                >
+                  <LogOut className="w-5 h-5" />
                 </button>
-                {dropdownOpen && (
-                  <>
-                    <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
-                    <div className={`absolute right-0 mt-2 w-52 rounded-xl shadow-2xl border overflow-hidden z-20 ${
-                      darkMode ? 'bg-dark-800 border-dark-700' : 'bg-white border-dark-200'
-                    }`}>
-                      {user.role === 'admin' && (
-                        <Link
-                          to="/admin"
-                          onClick={() => setDropdownOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-3 text-sm transition-all ${
-                            darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-50 text-dark-700'
-                          }`}
-                        >
-                          <Shield className="w-4 h-4 text-primary-400" />
-                          Admin Dashboard
-                        </Link>
-                      )}
-                        <Link
-                          to="/favorites"
-                          onClick={() => setDropdownOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-3 text-sm transition-all ${
-                            darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-50 text-dark-700'
-                          }`}
-                        >
-                          <Heart className="w-4 h-4 text-red-400" />
-                          Favorites
-                        </Link>
-                        <Link
-                          to="/history"
-                          onClick={() => setDropdownOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-3 text-sm transition-all ${
-                            darkMode ? 'hover:bg-dark-700 text-dark-200' : 'hover:bg-dark-50 text-dark-700'
-                          }`}
-                        >
-                          <Clock className="w-4 h-4 text-primary-400" />
-                          My History
-                        </Link>
-                      <button
-                        onClick={() => { logout(); setDropdownOpen(false); }}
-                        className={`flex items-center gap-3 px-4 py-3 text-sm w-full transition-all ${
-                          darkMode ? 'hover:bg-dark-700 text-red-400' : 'hover:bg-dark-50 text-red-600'
-                        }`}
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </>
-                )}
               </div>
             ) : (
               <Link

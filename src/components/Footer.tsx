@@ -13,8 +13,8 @@ export default function Footer({ darkMode }: FooterProps) {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-600 via-accent-500 to-gold-500 rounded-xl flex items-center justify-center">
-                <Car className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center">
+                <img src="/logo.jpg" alt="Global Drive" className="w-full h-full object-cover" />
               </div>
               <div>
                 <span className="font-bold text-lg text-white">Global Drive</span>

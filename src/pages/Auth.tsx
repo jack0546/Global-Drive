@@ -75,8 +75,8 @@ export default function Auth({ darkMode }: AuthProps) {
         >
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary-600 via-accent-500 to-gold-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Car className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center mx-auto mb-4">
+              <img src="/logo.jpg" alt="Global Drive" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-2xl font-bold">{isLogin ? 'Welcome Back' : 'Create Account'}</h1>
             <p className={`text-sm mt-1 ${darkMode ? 'text-dark-400' : 'text-dark-500'}`}>
