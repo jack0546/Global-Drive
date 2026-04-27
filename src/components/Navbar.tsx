@@ -180,6 +180,40 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
                 {link.label}
               </Link>
             ))}
+
+            {user ? (
+              <>
+                <div className={`my-2 border-t ${darkMode ? 'border-dark-700' : 'border-dark-200'}`} />
+                <Link
+                  to="/history"
+                  onClick={() => setMobileOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-sm font-medium ${darkMode ? 'text-dark-300 hover:bg-dark-700' : 'text-dark-600 hover:bg-dark-100'}`}
+                >
+                  My History
+                </Link>
+                <Link
+                  to="/favorites"
+                  onClick={() => setMobileOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-sm font-medium ${darkMode ? 'text-dark-300 hover:bg-dark-700' : 'text-dark-600 hover:bg-dark-100'}`}
+                >
+                  My Favorites
+                </Link>
+                <button
+                  onClick={() => { logout(); setMobileOpen(false); }}
+                  className="block w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-red-500 hover:bg-red-500/10"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/auth"
+                onClick={() => setMobileOpen(false)}
+                className={`block px-4 py-3 rounded-lg text-sm font-medium ${darkMode ? 'text-dark-300 hover:bg-dark-700' : 'text-dark-600 hover:bg-dark-100'}`}
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       )}
