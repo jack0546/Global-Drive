@@ -5,7 +5,7 @@ interface WhatsAppButtonProps {
 }
 
 export default function WhatsAppButton({ carName }: WhatsAppButtonProps) {
-  const phone = '0244240166';
+  const phone = '233244240166';
   const message = carName
     ? `Hello Global Drive Africa, I'm interested in ${carName}`
     : 'Hello Global Drive Africa, I would like to know more about your services.';

@@ -95,7 +95,7 @@ export default function Contact({ darkMode }: ContactProps) {
           >
             {[
               { icon: MapPin, title: 'Visit Us', details: ['Airport City, Accra', 'Ghana, West Africa'] },
-              { icon: Phone, title: 'Call Us', details: ['0244240166', 'Mon-Sat: 9AM - 6PM'] },
+              { icon: Phone, title: 'Call Us', details: ['+233244240166', 'Mon-Sat: 9AM - 6PM'] },
               { icon: Mail, title: 'Email Us', details: ['globaldrive.gh@gmail.com', 'We reply within 24 hours'] },
               { icon: Clock, title: 'Business Hours', details: ['Mon - Fri: 8AM - 6PM', 'Sat: 9AM - 4PM', 'Sun: Closed'] },
             ].map((item, i) => (
@@ -114,7 +114,7 @@ export default function Contact({ darkMode }: ContactProps) {
 
             {/* WhatsApp */}
             <a
-              href="https://wa.me/0244240166"
+              href="https://wa.me/233244240166"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 transition-all"
@@ -175,7 +175,7 @@ export default function Contact({ darkMode }: ContactProps) {
                     className={`w-full px-4 py-3 rounded-xl text-sm border transition-all ${
                       darkMode ? 'bg-dark-700 border-dark-600 text-dark-200 placeholder-dark-500 focus:border-primary-500' : 'bg-dark-50 border-dark-200 focus:border-primary-500'
                     }`}
-                    placeholder="0244240166"
+                    placeholder="+233244240166"
                   />
                 </div>
                 <div>
