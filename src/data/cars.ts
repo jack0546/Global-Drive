@@ -434,6 +434,40 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '12',
+    brand: 'Toyota',
+    name: '2024 Toyota bZ4X',
+    model: 'bZ4X',
+    year: 2024,
+    mileage: 0,
+    fuelType: 'Electric',
+    transmission: 'Automatic',
+    engineCapacity: 'Electric (150kW)',
+    condition: 'New',
+    bodyType: 'SUV',
+    priceGHS: 850000,
+    priceUSD: 70000,
+    images: [
+      '/cars/12/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/12/exterior-1.jpg',
+      '/cars/12/exterior-2.jpg',
+      '/cars/12/exterior-3.jpg',
+      '/cars/12/exterior-4.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The 2024 Toyota bZ4X is Toyota\'s first all-electric SUV, offering a blend of modern design, advanced technology, and zero-emission performance. With its spacious interior, long-range capabilities, and cutting-edge safety features, it\'s the perfect choice for the environmentally conscious driver.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: true,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -472,7 +506,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 17 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 18 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
