@@ -468,6 +468,41 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '13',
+    brand: 'Toyota',
+    name: 'Toyota Hilux Revo 2025',
+    model: 'Hilux Revo',
+    year: 2025,
+    mileage: 0,
+    fuelType: 'Diesel',
+    transmission: 'Manual',
+    engineCapacity: '2.8L Turbo',
+    condition: 'New',
+    bodyType: 'Pickup',
+    priceGHS: 650000,
+    priceUSD: 54000,
+    images: [
+      '/cars/13/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/13/exterior-1.jpg',
+      '/cars/13/exterior-2.jpg',
+      '/cars/13/exterior-3.jpg',
+      '/cars/13/exterior-4.jpg',
+      '/cars/13/exterior-5.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The Toyota Hilux Revo 2025 is the pinnacle of rugged durability and modern performance. Built to handle the toughest terrains in Africa, this pickup combines a powerful 2.8L turbo diesel engine with a reinforced chassis and advanced safety features, making it the ultimate workhorse and lifestyle vehicle.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: true,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -506,7 +541,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 18 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 19 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
