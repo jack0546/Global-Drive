@@ -607,6 +607,41 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '17',
+    brand: 'Toyota',
+    name: '2025 Toyota RAV4 (XA50)',
+    model: 'RAV4 XA50',
+    year: 2025,
+    mileage: 0,
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '2.5L 4-Cyl',
+    condition: 'New',
+    bodyType: 'SUV',
+    priceGHS: 680000,
+    priceUSD: 56000,
+    images: [
+      '/cars/17/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/17/exterior-1.jpg',
+      '/cars/17/exterior-2.jpg',
+      '/cars/17/exterior-3.jpg',
+      '/cars/17/exterior-4.jpg',
+      '/cars/17/exterior-5.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The 2025 Toyota RAV4 (XA50) represents the latest in the fifth-generation evolution of the world\'s best-selling SUV. Featuring a refined white exterior and the robust XA50 platform, this 2025 model offers enhanced performance, state-of-the-art safety technology, and unparalleled reliability for the discerning driver.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: true,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -645,7 +680,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 22 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 23 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
