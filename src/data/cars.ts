@@ -575,6 +575,38 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '16',
+    brand: 'Toyota',
+    name: '2024 Toyota RAV4 XLE',
+    model: 'RAV4 XLE',
+    year: 2024,
+    mileage: 0,
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '2.5L 4-Cyl',
+    condition: 'New',
+    bodyType: 'SUV',
+    priceGHS: 620000,
+    priceUSD: 52000,
+    images: [
+      '/cars/16/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/16/exterior-1.jpg',
+      '/cars/16/exterior-2.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The 2024 Toyota RAV4 XLE (5th Generation) combines sophisticated style with everyday utility. This premium SUV features advanced driver-assistance systems, a comfortable cabin with dual-zone climate control, and a smooth yet powerful 2.5L engine. Perfect for those who demand more from their daily drive.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: false,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -613,7 +645,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 21 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 22 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
