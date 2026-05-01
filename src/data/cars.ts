@@ -680,6 +680,40 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '19',
+    brand: 'Toyota',
+    name: 'Toyota HiAce Van (H200)',
+    model: 'HiAce H200',
+    year: 2018,
+    mileage: 120000,
+    fuelType: 'Diesel',
+    transmission: 'Manual',
+    engineCapacity: '2.5L Turbo',
+    condition: 'Foreign Used',
+    bodyType: 'Van',
+    priceGHS: 280000,
+    priceUSD: 23500,
+    images: [
+      '/cars/19/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/19/exterior-1.jpg',
+      '/cars/19/exterior-2.jpg',
+      '/cars/19/exterior-3.jpg',
+      '/cars/19/exterior-4.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The Toyota HiAce Van (5th Generation H200 Series) is the world-standard for commercial utility and passenger transport. Renowned for its legendary durability, massive cargo space, and efficient turbo-diesel engine, this HiAce is perfect for business logistics or group transport. A reliable workhorse that never quits.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: false,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -718,7 +752,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 24 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 25 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
