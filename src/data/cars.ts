@@ -714,6 +714,45 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '20',
+    brand: 'Toyota',
+    name: 'Toyota Voxy (ZRR80)',
+    model: 'Voxy ZRR80',
+    year: 2019,
+    mileage: 45000,
+    fuelType: 'Petrol/Hybrid',
+    transmission: 'Automatic',
+    engineCapacity: '2.0L 4-Cyl',
+    condition: 'Foreign Used',
+    bodyType: 'MPV',
+    priceGHS: 240000,
+    priceUSD: 20500,
+    images: [
+      '/cars/20/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/20/exterior-1.jpg',
+      '/cars/20/exterior-2.jpg',
+      '/cars/20/exterior-3.jpg',
+      '/cars/20/exterior-4.jpg',
+      '/cars/20/exterior-5.jpg',
+      '/cars/20/exterior-6.jpg',
+      '/cars/20/exterior-7.jpg',
+      '/cars/20/exterior-8.jpg',
+      '/cars/20/exterior-9.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The Toyota Voxy (ZRR80 Series) is the ultimate family MPV, offering a perfect blend of space, comfort, and advanced technology. With its sleek black exterior and aerodynamic "R80" styling, this Voxy provides a premium driving experience while comfortably seating up to 7 or 8 passengers. Ideal for families seeking versatility without compromising on style.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: false,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -752,7 +791,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 25 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 26 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
