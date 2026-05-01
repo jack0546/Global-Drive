@@ -542,6 +542,39 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '15',
+    brand: 'Toyota',
+    name: '2013 Toyota Corolla',
+    model: 'Corolla',
+    year: 2013,
+    mileage: 95000,
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '1.8L 4-Cyl',
+    condition: 'Foreign Used',
+    bodyType: 'Sedan',
+    priceGHS: 110000,
+    priceUSD: 9200,
+    images: [
+      '/cars/15/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/15/exterior-1.jpg',
+      '/cars/15/exterior-2.jpg',
+      '/cars/15/exterior-3.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The 2013 Toyota Corolla is a testament to reliability and efficiency. This silver sedan offers a smooth ride, excellent fuel economy, and a reputation for longevity that is second to none. Perfect for families or professionals seeking a dependable daily driver.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: false,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -580,7 +613,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 20 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 21 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
