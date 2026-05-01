@@ -503,6 +503,45 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '14',
+    brand: 'Toyota',
+    name: '2024 Toyota RAV4',
+    model: 'RAV4',
+    year: 2024,
+    mileage: 0,
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '2.5L 4-Cyl',
+    condition: 'New',
+    bodyType: 'SUV',
+    priceGHS: 580000,
+    priceUSD: 48000,
+    images: [
+      '/cars/14/default-1.jpg',
+    ],
+    interiorImages: [
+      '/cars/14/interior-1.jpg',
+    ],
+    exteriorImages: [
+      '/cars/14/exterior-1.jpg',
+      '/cars/14/exterior-2.jpg',
+      '/cars/14/exterior-3.jpg',
+      '/cars/14/exterior-4.jpg',
+      '/cars/14/exterior-5.jpg',
+      '/cars/14/exterior-6.jpg',
+      '/cars/14/exterior-7.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'This Deep Red Fifth Generation Toyota RAV4 is the ultimate 5-door compact SUV for the modern driver. Combining rugged styling with premium interior comfort, it offers exceptional reliability and performance for both city commutes and weekend adventures.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: true,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -541,7 +580,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 19 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 20 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
