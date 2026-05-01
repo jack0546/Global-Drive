@@ -396,6 +396,44 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-04-30',
   },
+  {
+    id: '11',
+    brand: 'Toyota',
+    name: 'Toyota Vios (XP90)',
+    model: 'Vios XP90',
+    year: 2012,
+    mileage: 85000,
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '1.5L 4-Cyl',
+    condition: 'Foreign Used',
+    bodyType: 'Sedan',
+    priceGHS: 120000,
+    priceUSD: 10000,
+    images: [
+      '/cars/11/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/11/exterior-1.jpg',
+      '/cars/11/exterior-2.jpg',
+      '/cars/11/exterior-3.jpg',
+      '/cars/11/exterior-4.jpg',
+      '/cars/11/exterior-5.jpg',
+      '/cars/11/exterior-6.jpg',
+      '/cars/11/exterior-7.jpg',
+      '/cars/11/exterior-8.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The Toyota Vios (XP90) is a reliable and fuel-efficient subcompact sedan, perfect for urban driving. Known for its durability and low maintenance costs, this vehicle offers a comfortable ride and practical features for everyday use.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: false,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -434,7 +472,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 16 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 17 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
