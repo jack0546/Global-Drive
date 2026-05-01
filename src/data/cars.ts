@@ -642,6 +642,44 @@ export const cars: Car[] = [
     sold: false,
     createdAt: '2026-05-01',
   },
+  {
+    id: '18',
+    brand: 'Toyota',
+    name: '2016 Toyota Yaris L',
+    model: 'Yaris L',
+    year: 2016,
+    mileage: 65000,
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '1.3L 4-Cyl',
+    condition: 'Foreign Used',
+    bodyType: 'Hatchback',
+    priceGHS: 85000,
+    priceUSD: 7100,
+    images: [
+      '/cars/18/default-1.jpg',
+    ],
+    interiorImages: [],
+    exteriorImages: [
+      '/cars/18/exterior-1.jpg',
+      '/cars/18/exterior-2.jpg',
+      '/cars/18/exterior-3.jpg',
+      '/cars/18/exterior-4.jpg',
+      '/cars/18/exterior-5.jpg',
+      '/cars/18/exterior-6.jpg',
+      '/cars/18/exterior-7.jpg',
+      '/cars/18/exterior-8.jpg',
+    ],
+    engineImages: [],
+    partsImages: [],
+    description: 'The 2016 Toyota Yaris L is a stylish and practical hatchback designed for the modern city dweller. With its vibrant red exterior and compact dimensions, it maneuvers easily through traffic while providing surprising interior space and legendary Toyota reliability.',
+    importAvailable: true,
+    location: 'Accra, Ghana',
+    featured: false,
+    latestArrival: true,
+    sold: false,
+    createdAt: '2026-05-01',
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -680,7 +718,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const brands: Brand[] = [
-  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 23 },
+  { id: '1', name: 'Toyota', logo: 'https://img.icons8.com/color/96/toyota.png', count: 24 },
   { id: '2', name: 'Honda', logo: 'https://img.icons8.com/color/96/honda.png', count: 10 },
   { id: '3', name: 'Mercedes-Benz', logo: 'https://img.icons8.com/color/96/mercedes-benz.png', count: 8 },
   { id: '4', name: 'BMW', logo: 'https://img.icons8.com/color/96/bmw.png', count: 6 },
