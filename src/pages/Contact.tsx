@@ -94,7 +94,7 @@ export default function Contact({ darkMode }: ContactProps) {
             className="space-y-6"
           >
             {[
-              { icon: MapPin, title: 'Visit Us', details: ['Airport City, Accra', 'Ghana, West Africa'] },
+              { icon: MapPin, title: 'Visit Us', details: ['Water Tema, Accra', 'Ghana, West Africa'] },
               { icon: Phone, title: 'Call Us', details: ['+233244240166', 'Mon-Sat: 9AM - 6PM'] },
               { icon: Mail, title: 'Email Us', details: ['globaldrive.gh@gmail.com', 'We reply within 24 hours'] },
               { icon: Clock, title: 'Business Hours', details: ['Mon - Fri: 8AM - 6PM', 'Sat: 9AM - 4PM', 'Sun: Closed'] },

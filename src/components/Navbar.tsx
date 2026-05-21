@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Car, Menu, X, User, LogOut, Shield, Heart, Moon, Sun, Clock } from 'lucide-react';
+import { Menu, X, User, LogOut, Shield, Heart, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 interface NavbarProps {
@@ -10,7 +10,6 @@ interface NavbarProps {
 
 export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, logout } = useAuth();
   const location = useLocation();
 

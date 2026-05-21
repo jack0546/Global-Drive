@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Car, Mail, Phone, MapPin, Globe, MessageCircle, Camera, Video } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, MessageCircle, Camera, Video } from 'lucide-react';
 
 interface FooterProps {
   darkMode: boolean;
